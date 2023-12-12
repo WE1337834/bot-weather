@@ -4,19 +4,24 @@ const token = '6891044114:AAHi33ONqEEFaJkArrq4IuamPccLkSLQB7g';
 const openWeatherMapApiKey = '9fde3782f36dea3a1936e0b7cebe7c90'
 const bot = new TelegtamApi(token, {polling: true});
 
-const start = () => {
-    // bot.setMyCommands([
-    //     {command: '/start', description: 'Начать'},
-    // ])
+const botSayHi = "Здравствуйте, я Weathertestbot. Я могу подсказать вам погоду в любом городе мира(принимается название города ТОЛЬКО на английском языке!)";
 
+const start = () => {
+    bot.setMyCommands([
+        {command: '/start', description: 'Начать'},
+    ])
+
+    bot.on('/start', (msg) => {
+        const chatId = msg.chat.id;
+        const text = msg.text;
+
+        if(text === '/start'){
+            bot.sendMessage(chatId, botSayHi)
+        }
+    });
     bot.on('message', (msg) => {
         const chatId = msg.chat.id;
         const text = msg.text;
-        
-        console.log(text)
-        // if(text === '/start'){
-        //     bot.sendMessage(chatId, "Здравствуйте, я Weathertestbot. Я могу подсказать вам погоду в любом городе мира(принимается название города ТОЛЬКО на английском языке!)")
-        // }
 
         getCurrentWeather(text, messageText => {
             bot.sendMessage(chatId, messageText)
@@ -35,7 +40,7 @@ const start = () => {
             let temp = info.main.temp;
             
             let emojiIcon = '';
-
+            console.log(info)
             if(weatherType >= 200 && weatherType <= 232){
                 emojiIcon = 'Гроза, ';
             }
@@ -62,4 +67,4 @@ const start = () => {
         });
    }
 }
-start()
+console.log(start())
