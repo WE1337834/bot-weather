@@ -17,11 +17,12 @@ const start = () => {
 
         if(text === '/start'){
             bot.sendMessage(chatId, botSayHi)
+        }else{
+            getCurrentWeather(text, messageText => {
+                bot.sendMessage(chatId, messageText)
+            });
         }
 
-        getCurrentWeather(text, messageText => {
-            bot.sendMessage(chatId, messageText)
-        });
     });
 
     function getCurrentWeather(cityName, callback){
