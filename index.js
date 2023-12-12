@@ -11,17 +11,13 @@ const start = () => {
         {command: '/start', description: 'Начать'},
     ])
 
-    bot.on('/start', (msg) => {
+    bot.on('message', (msg) => {
         const chatId = msg.chat.id;
         const text = msg.text;
 
         if(text === '/start'){
             bot.sendMessage(chatId, botSayHi)
         }
-    });
-    bot.on('message', (msg) => {
-        const chatId = msg.chat.id;
-        const text = msg.text;
 
         getCurrentWeather(text, messageText => {
             bot.sendMessage(chatId, messageText)
@@ -67,4 +63,4 @@ const start = () => {
         });
    }
 }
-console.log(start())
+start()
